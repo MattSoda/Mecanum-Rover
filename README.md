@@ -2,10 +2,10 @@ Mecanum Rover is an Arduino-based bluetooth controlled vehicle with mecanum whee
 The addition of an ESP32 camera module, allowing us to capture and stream live video footage directly to our smartphone or tablet.
 
 Features
-   ✅ Mecanum wheel movement (omnidirectional)
-   ✅ Bluetooth & voice control (upgradable to AI-based auto-navigation)
-   ✅ Live camera streaming using ESP32-CAM
-
+   ✅Mecanum wheel movement (omnidirectional movement)
+   ✅Bluetooth & voice control (upgradable to AI-based auto-navigation)
+   ✅Live camera streaming using ESP32-CAM
+   
 Components Used
 1. Arduino Uno
 2. L293D Motor Shield
