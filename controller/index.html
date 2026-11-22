@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171a19">
+    <title>Mecanum Rover Controller</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Mecanum Rover Controller home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">MECANUM <span>ROVER</span></span>
+        </a>
+        <div class="topbar-center"><span class="connection-orbit" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 2v20l7-6-5-4 5-4-7-6ZM5 7l14 10M5 17 19 7"/></svg></span><span class="topbar-caption">ROVER LINK</span></div>
+        <div class="connection-bar">
+          <span class="connection-label"><i id="bluetooth-led" class="status-led"></i><span id="bluetooth-status">Disconnected</span></span>
+          <button id="bluetooth-button" class="connect-button" type="button">Connect</button>
+        </div>
+      </header>
+
+      <div class="dashboard">
+        <section class="control-panel drive-panel" aria-labelledby="drive-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">01 / MOVEMENT</p><h1 id="drive-title">Drive</h1></div>
+            <span class="heading-mark" aria-hidden="true">↗</span>
+          </div>
+          <p class="panel-hint">Hold a direction to move</p>
+          <div class="dpad" aria-label="Mecanum movement controls">
+            <button class="drive-button diagonal diag-ul" data-command="Q" data-label="Forward-left" aria-label="Forward left">↖</button>
+            <button class="drive-button" data-command="F" data-label="Forward" aria-label="Forward">↑</button>
+            <button class="drive-button diagonal diag-ur" data-command="E" data-label="Forward-right" aria-label="Forward right">↗</button>
+            <button class="drive-button" data-command="X" data-label="Strafe left" aria-label="Strafe left">←</button>
+            <button id="brake-button" class="drive-button brake-button" data-command="S" data-label="Stop" aria-label="Stop rover">STOP</button>
+            <button class="drive-button" data-command="Y" data-label="Strafe right" aria-label="Strafe right">→</button>
+            <button class="drive-button diagonal diag-bl" data-command="Z" data-label="Back-left" aria-label="Back left">↙</button>
+            <button class="drive-button" data-command="B" data-label="Backward" aria-label="Backward">↓</button>
+            <button class="drive-button diagonal diag-br" data-command="C" data-label="Back-right" aria-label="Back right">↘</button>
+          </div>
+          <div class="roll-actions" aria-label="Lateral roll controls">
+            <button class="drive-button roll-button" data-command="L" data-label="Roll left" aria-label="Roll left"><span>↶</span> ROLL LEFT</button>
+            <button class="drive-button roll-button" data-command="R" data-label="Roll right" aria-label="Roll right"><span>↷</span> ROLL RIGHT</button>
+          </div>
+          <div class="drive-footer"><span>ARROWS / WASD</span><span>RELEASE TO STOP</span></div>
+        </section>
+
+        <section class="camera-panel" aria-labelledby="camera-title">
+          <div class="camera-heading">
+            <div><p class="eyebrow">LIVE FEED / 02</p><h2 id="camera-title">ESP32 <span>CAM</span></h2></div>
+            <span class="camera-status"><i id="camera-led" class="status-led"></i><span id="camera-status-text">OFFLINE</span></span>
+          </div>
+          <div class="camera-frame">
+            <div id="camera-placeholder" class="camera-placeholder">
+              <span class="camera-symbol" aria-hidden="true">
+                <svg viewBox="0 0 48 40" focusable="false"><path d="M5 10h9l4-5h12l4 5h9a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3Zm19 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/></svg>
+              </span>
+              <strong>Waiting for camera</strong>
+              <span>Connect to the rover's camera feed</span>
+            </div>
+            <img id="camera-stream" alt="Live ESP32 camera feed" hidden>
+            <div class="camera-live-tag"><i class="record-dot"></i><span>LIVE</span></div>
+            <span class="camera-corner camera-corner-tl"></span><span class="camera-corner camera-corner-br"></span>
+          </div>
+          <form id="camera-form" class="camera-connect-row">
+            <label class="sr-only" for="camera-url">ESP32-CAM address</label>
+            <span class="url-prefix" aria-hidden="true">IP</span>
+            <input id="camera-url" type="url" inputmode="url" placeholder="Camera address  ·  http://192.168.1.50" autocomplete="url">
+            <button id="stream-button" class="stream-button" type="submit">Start feed <span aria-hidden="true">↗</span></button>
+          </form>
+        </section>
+
+        <section class="control-panel tools-panel" aria-labelledby="tools-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">03 / ROVER</p><h2 id="tools-title">Tools</h2></div>
+            <span class="heading-mark" aria-hidden="true">⌁</span>
+          </div>
+
+          <div class="tool-row light-row">
+            <span class="tool-icon light-icon" aria-hidden="true">☼</span>
+            <span class="tool-copy"><strong>Headlights</strong><small>Front lamps</small></span>
+            <button id="headlight-button" class="light-toggle" type="button" aria-label="Turn headlights on" aria-pressed="false"><span></span></button>
+          </div>
+
+          <div class="tool-divider"></div>
+          <div class="servo-heading"><span class="tool-icon servo-icon" aria-hidden="true">⌖</span><span class="tool-copy"><strong>Camera mount</strong><small>Servo position</small></span></div>
+          <div class="servo-readout"><span>ANGLE</span><output id="servo-angle" for="servo-position">90°</output></div>
+          <input id="servo-position" class="servo-slider" type="range" min="0" max="8" value="4" step="1" aria-label="Camera mount angle">
+          <div class="servo-scale"><span>0°</span><span>90°</span><span>180°</span></div>
+        </section>
+      </div>
+
+      <footer><span class="footer-brand"><span class="footer-dot"></span> MECANUM ROVER / REMOTE CONTROL</span><span id="last-command">READY</span></footer>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
