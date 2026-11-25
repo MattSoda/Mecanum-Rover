@@ -13,6 +13,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 body {
   min-width: 320px;
@@ -86,9 +87,10 @@ h1, h2 { margin-bottom: 0; font-size: 21px; font-weight: 550; letter-spacing: -.
 .camera-heading h2 span { color: var(--muted); font-weight: 400; }
 .camera-status { display: inline-flex; align-items: center; gap: 8px; color: #858b83; font-size: 9px; font-weight: 700; letter-spacing: 1px; }
 .camera-frame { position: relative; display: grid; width: 100%; min-height: 255px; aspect-ratio: 16 / 10; overflow: hidden; place-items: center; border: 1px solid #454c46; border-radius: 5px; background: radial-gradient(ellipse at center, #272d29, #141716 75%); }
-.camera-frame img { width: 100%; height: 100%; max-height: 440px; object-fit: contain; }
+.camera-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .camera-frame img[hidden] { display: none; }
-.camera-placeholder { max-width: 250px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; text-align: center; color: #838a81; font-size: 10px; }
+.camera-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 14px; text-align: center; color: #838a81; font-size: 10px; }
+.camera-placeholder > * { max-width: 250px; }
 .camera-placeholder strong { margin: 12px 0 4px; color: #d0d4cc; font-size: 13px; font-weight: 550; }
 .camera-symbol { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid #586153; border-radius: 50%; background: #c9f36a0b; }
 .camera-symbol svg { width: 24px; fill: var(--accent); }

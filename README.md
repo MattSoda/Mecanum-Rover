@@ -29,3 +29,7 @@ An interactive browser dashboard for rover movement, lights, the servo camera mo
 ESP32-CAM Controller Firmware
 -----------------------------
 The standalone AI-Thinker-compatible camera firmware for the web controller is in [`src/esp32_camera_controller/`](src/esp32_camera_controller/). It serves the live feed on `/stream` at port 80; see its [upload instructions](src/esp32_camera_controller/README.md).
+
+Android Controller
+------------------
+A native Android app for controlling the rover over HC-05 Bluetooth Classic and viewing the ESP32-CAM stream is in [`android-app/`](android-app/). See its [Android Studio setup and install instructions](android-app/README.md).
